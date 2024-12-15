@@ -1,66 +1,23 @@
-## Foundry
-
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
-
-Foundry consists of:
-
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
+## Raffle Smart Contract
+Deployed at `0x355b7F6CA973871219B66645a4e9B7C520314883`
 
 ## Usage
 
-### Build
-
-```shell
-$ forge build
+### Store private key in account
+(You need to have 100 LINK)
+```bash
+cast wallet import myaccount -i
 ```
-
-### Test
-
-```shell
-$ forge test
+### Make a .env file in root directory
 ```
-
-### Format
-
-```shell
-$ forge fmt
+SEPOLIA_RPC_URL=https://eth-sepolia.g.alchemy.com/v2/...
+ETHERSCAN_API_KEY=...
 ```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
+### Deploy Raffle to Sepolia
+```bash
+source .env
+make deploy-sepolia
 ```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+After deploying:  
+- Go to `https://automation.chain.link/sepolia/new` and register a new custom upkeep.  
+- Check the console logs, get the subscriptionId and change line 61 of the `script/HelperConfig.s.sol` file accordingly, so that you won't create a new subscription if you redeploy.
