@@ -4,7 +4,7 @@ Deployed at `0x355b7F6CA973871219B66645a4e9B7C520314883`
 ## Usage
 
 ### Store private key in account
-(Need to have at least 100 Testnet LINK)
+(Needs to have at least 100 Testnet LINK)
 ```bash
 cast wallet import myaccount -i
 ```
