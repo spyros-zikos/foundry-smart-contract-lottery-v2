@@ -8,6 +8,7 @@ Deployed at `0x355b7F6CA973871219B66645a4e9B7C520314883`
 ```bash
 cast wallet import myaccount -i
 ```
+Note: You can choose any account name instead of "myaccount".
 ### 2. Make a .env file in root directory
 ```
 SEPOLIA_RPC_URL=https://eth-sepolia.g.alchemy.com/v2/...
