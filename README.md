@@ -4,7 +4,7 @@ Deployed at `0x355b7F6CA973871219B66645a4e9B7C520314883`
 ## Usage
 
 ### 1. Create account from private key (If you don't already have one)
-(Needs to have at least 100 Testnet LINK and some Sepolia ETH)
+(Account needs to have at least 100 Testnet LINK and some Sepolia ETH)
 ```bash
 cast wallet import myaccount -i
 ```
