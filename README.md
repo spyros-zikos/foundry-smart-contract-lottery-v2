@@ -3,21 +3,33 @@ Deployed at `0x355b7F6CA973871219B66645a4e9B7C520314883`
 
 ## Usage
 
-### Store private key in account
-(Needs to have at least 100 Testnet LINK)
+### 1. Create account from private key
+(Needs to have at least 100 Testnet LINK and some Sepolia ETH)
 ```bash
 cast wallet import myaccount -i
 ```
-### Make a .env file in root directory
+### 2. Make a .env file in root directory
 ```
 SEPOLIA_RPC_URL=https://eth-sepolia.g.alchemy.com/v2/...
 ETHERSCAN_API_KEY=...
+ACCOUNT_NAME=... (The name of the account that you created in the previous step.)
+ACCOUNT_ADDRESS=0x... (The address of the account that you created.)
+SEPOLIA_SUB_ID=0 (If you have a VRF subscription id, put it here. Otherwise you will generate one below.)
 ```
-### Deploy Raffle to Sepolia
+### 3. Build the project
 ```bash
-source .env
+make build
+```
+### 4. Get VRF subscription id
+```bash
 make deploy-sepolia
 ```
-After deploying:  
+Go to https://vrf.chain.link/sepolia and get the subscription id from `My Subscriptions` section. (You may have to wait a while until it shows up.)  
+Then replace `0` with the new id in the `SEPOLIA_SUB_ID` variable of the `.env` file.
+### 5. Deploy Raffle to Sepolia
+```bash
+make deploy-sepolia
+```
+### 6. After deploying
 - Go to `https://automation.chain.link/sepolia/new` and register a new custom upkeep.  
-- Check the console logs, get the subscriptionId and change line 61 of the `script/HelperConfig.s.sol` file accordingly, so that you won't create a new subscription if you redeploy.
+- If you don't want to register a custom upkeep you can call the `performUpkeep` function manually.

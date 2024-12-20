@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-import {Script} from "forge-std/Script.sol";
+import {Script, console} from "forge-std/Script.sol";
 import {Raffle} from "src/Raffle.sol";
-import {HelperConfig} from "script/HelperConfig.s.sol";
+import {HelperConfig, CodeConstants} from "script/HelperConfig.s.sol";
 import {CreateSubscription, FundSubscription, AddConsumer} from "script/Interactions.s.sol"; 
+import {VRFCoordinatorV2_5Mock} from "@chainlink/contracts/src/v0.8/vrf/mocks/VRFCoordinatorV2_5Mock.sol";
 
-contract DeployRaffle is Script {
+contract DeployRaffle is Script, CodeConstants {
     function run() external {
         deployContract();
     }
@@ -19,7 +20,14 @@ contract DeployRaffle is Script {
             // create subscription
             CreateSubscription createSubscription = new CreateSubscription();
             (config.subscriptionId, config.vrfCoordinator) = createSubscription.createSubscription(config.vrfCoordinator, config.account);
+            if (block.chainid != LOCAL_CHAIN_ID) {
+                console.log("Subscription Id is not set! Follow the README.md instructions!");
+                return (new Raffle(0, 0, address(1), "", 0, 0), helperConfig);
+            }
+        }
 
+        (uint96 vrfBalance,,,,)= VRFCoordinatorV2_5Mock(config.vrfCoordinator).getSubscription(config.subscriptionId);
+        if (vrfBalance == 0) {
             // fund subscription
             FundSubscription fundSubscription = new FundSubscription();
             fundSubscription.fundSubscription(config.vrfCoordinator, config.subscriptionId, config.link, config.account);

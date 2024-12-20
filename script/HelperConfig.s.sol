@@ -52,16 +52,16 @@ contract HelperConfig is CodeConstants, Script {
         return getConfigByChainId(block.chainid);
     }
 
-    function getSepoliaEthConfig() public pure returns(NetworkConfig memory) {
+    function getSepoliaEthConfig() public view returns(NetworkConfig memory) {
         return NetworkConfig({
             entranceFee: 0.01 ether,
             interval: 30, // 30 seconds
             vrfCoordinator: 0x9DdfaCa8183c41ad55329BdeeD9F6A8d53168B1B,
             gasLane: 0x787d74caea10b2b357790d5b5247c2f63d1d91572a9846f780606e4d953677ae,
-            subscriptionId: 0, //63508960633484293857696462576940668062396283932524305379238118264238831399104,
+            subscriptionId: vm.envUint("SEPOLIA_SUB_ID"),
             callbackGasLimit: 500000, // 500,000 gas
             link: 0x779877A7B0D9E8603169DdbD7836e478b4624789,
-            account: 0xe7a5b06E8dc5863566B974a4a19509898bdEc277
+            account: vm.envAddress("ACCOUNT_ADDRESS")
         });
     }
 
